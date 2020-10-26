@@ -31,14 +31,11 @@ lista3 = lista
 print(sorted(lista3, reverse=True))
 
 # 8
-krotka_indeks = (150788, 151100, 123412, 456313)
-krotka_imie = ("Paweł", "Mateusz", "Bartek", "Kamil")
-krotka_nazwisko = ("Bronk", "Lewandowski", "Glik", "Milik")
+lista_studenci = [(150788, "Paweł Bronk"), (151100, "Mateusz Lewandowski"), (123412, "Bartek Glik"), (456313, "Kamil Milik")]
+print(lista_studenci)
 
 # 9
-slownik_studenci = {}
-for i in range(len(krotka_indeks)):
-    slownik_studenci[krotka_indeks[i]] = (krotka_imie[i], krotka_nazwisko[i])
+slownik_studenci = dict(lista_studenci)
 print(slownik_studenci)
 
 # 10
