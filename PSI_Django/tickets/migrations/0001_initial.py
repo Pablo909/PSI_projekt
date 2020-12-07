@@ -44,8 +44,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('idMecz', models.IntegerField(primary_key=True, serialize=False)),
                 ('data', models.DateTimeField()),
-                ('idDruzyna1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Team1', to='bilety.druzyna')),
-                ('idDruzyna2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Team2', to='bilety.druzyna')),
+                ('idDruzyna1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Team1', to='tickets.druzyna')),
+                ('idDruzyna2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Team2', to='tickets.druzyna')),
             ],
         ),
         migrations.CreateModel(
@@ -53,9 +53,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('idBilet', models.IntegerField(primary_key=True, serialize=False)),
                 ('kwota', models.FloatField()),
-                ('idKlient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bilety.klient')),
-                ('idMecz', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bilety.mecz')),
-                ('idMiejsce', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bilety.miejsce')),
+                ('idKlient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tickets.klient')),
+                ('idMecz', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tickets.mecz')),
+                ('idMiejsce', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tickets.miejsce')),
             ],
         ),
     ]
