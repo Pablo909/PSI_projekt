@@ -40,8 +40,8 @@ class Team(models.Model):
 
 class Match(models.Model):
     date = models.DateTimeField()
-    id_team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team1")
-    id_team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team2")
+    id_team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home")
+    id_team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away")
 
     class Meta:
         ordering = ('date',)
@@ -52,9 +52,9 @@ class Match(models.Model):
 
 class Ticket(models.Model):
     price = models.FloatField()
-    id_client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name="client_ticket")
-    id_match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match_ticket")
-    id_place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place_ticket")
+    id_client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name="client_tickets")
+    id_match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match_tickets")
+    id_place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place_tickets")
 
     class Meta:
         ordering = ('id_match', 'id_place')
