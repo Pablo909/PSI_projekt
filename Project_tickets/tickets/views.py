@@ -55,7 +55,7 @@ class TeamDetails(generics.RetrieveDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    name = 'team-details'
+    name = 'team-detail'
 
 
 class MatchView(generics.ListCreateAPIView):
@@ -70,22 +70,22 @@ class MatchDetails(generics.RetrieveDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
-    name = 'match-details'
+    name = 'match-detail'
 
 
 class TicketView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Match.objects.all()
-    serializer_class = MatchSerializer
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
     name = 'ticket-view'
     ordering_fields = ['id_match']
 
 
 class TicketDetails(generics.RetrieveDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Match.objects.all()
-    serializer_class = MatchSerializer
-    name = 'ticket-details'
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+    name = 'ticket-detail'
 
 
 class ApiRoot(generics.GenericAPIView):
