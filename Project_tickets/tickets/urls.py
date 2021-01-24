@@ -15,4 +15,6 @@ urlpatterns = [
     path('match/<int:pk>', views.MatchDetails.as_view(), name=views.MatchDetails.name),
     path('ticket/', views.TicketView.as_view(), name=views.TicketView.name),
     path('ticket/<int:pk>', views.TicketDetails.as_view(), name=views.TicketDetails.name),
+    path('user/', views.UserView.as_view(), name=views.UserView.name),
+    path('user/<int:pk>', views.UserDetails.as_view(), name=views.UserDetails.name),
 ]

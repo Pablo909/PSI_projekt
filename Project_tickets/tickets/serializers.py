@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Client, Place, Team, Match, Ticket
+from django.contrib.auth.models import User
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
@@ -45,3 +46,9 @@ class TicketSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ticket
         fields = ['id', 'url', 'price', 'id_client', 'id_match', 'id_place']
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'url', 'username', 'password', 'email']
