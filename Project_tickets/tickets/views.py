@@ -6,6 +6,7 @@ from rest_framework import generics
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter, FilterSet, CharFilter
 # Create your views here.
 
 
@@ -64,12 +65,23 @@ class TeamDetails(generics.RetrieveDestroyAPIView):
     name = 'team-detail'
 
 
+class MatchFilter(FilterSet):
+    id_team1__name = CharFilter(field_name='id_team1__name')
+    id_team2__name = CharFilter(field_name='id_team2__name')
+    from_date = DateTimeFilter(field_name='date', lookup_expr='gte')
+    to_date = DateTimeFilter(field_name='date', lookup_expr='lte')
+
+    class Meta:
+        model = Match
+        fields = ['id_team1__name', 'id_team2__name', 'from_date', 'to_date']
+
+
 class MatchView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
     name = 'match-list'
-    filter_fields = ['date', 'id_team1', 'id_team2']
+    filter_class = MatchFilter
     search_fields = ['date', 'id_team1__name', 'id_team2__name']
     ordering_fields = ['date', 'id_team1', 'id_team2']
 
@@ -81,13 +93,23 @@ class MatchDetails(generics.RetrieveDestroyAPIView):
     name = 'match-detail'
 
 
+class TicketFilter(FilterSet):
+    from_price = NumberFilter(field_name='price', lookup_expr='gte')
+    to_price = NumberFilter(field_name='price', lookup_expr='lte')
+
+    class Meta:
+        model = Ticket
+        fields = ['from_price', 'to_price']
+
+
 class TicketView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     name = 'ticket-view'
-    filter_fields = ['price', 'id_match', 'id_client']
-    search_fields = ['price', 'id_match__date', 'id_client__second_name', 'id_client__first_name']
+    filter_class = TicketFilter
+    search_fields = ['price', 'id_match__date', 'id_match__id_team1__name', 'id_match__id_team2__name',
+                     'id_client__second_name', 'id_client__first_name']
     ordering_fields = ['price', 'id_match', 'id_client']
 
 
