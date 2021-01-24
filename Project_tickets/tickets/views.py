@@ -18,6 +18,8 @@ class ClientView(generics.ListCreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     name = 'client-list'
+    filter_fields = ['second_name', 'first_name']
+    search_fields = ['second_name', 'first_name', 'email', 'phone_number']
     ordering_fields = ['second_name', 'first_name']
 
 
@@ -33,6 +35,8 @@ class PlaceView(generics.ListCreateAPIView):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     name = 'place-list'
+    filter_fields = ['sector', 'row', 'number']
+    search_fields = ['sector', 'row', 'number']
     ordering_fields = ['sector', 'row', 'number']
 
 
@@ -48,6 +52,8 @@ class TeamView(generics.ListCreateAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     name = 'team-list'
+    filter_fields = ['name']
+    search_fields = ['name']
     ordering_fields = ['name']
 
 
@@ -63,7 +69,9 @@ class MatchView(generics.ListCreateAPIView):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
     name = 'match-list'
-    ordering_fields = ['date']
+    filter_fields = ['date', 'id_team1', 'id_team2']
+    search_fields = ['date', 'id_team1__name', 'id_team2__name']
+    ordering_fields = ['date', 'id_team1', 'id_team2']
 
 
 class MatchDetails(generics.RetrieveDestroyAPIView):
@@ -78,7 +86,9 @@ class TicketView(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     name = 'ticket-view'
-    ordering_fields = ['id_match']
+    filter_fields = ['price', 'id_match', 'id_client']
+    search_fields = ['price', 'id_match__date', 'id_client__second_name', 'id_client__first_name']
+    ordering_fields = ['price', 'id_match', 'id_client']
 
 
 class TicketDetails(generics.RetrieveDestroyAPIView):
