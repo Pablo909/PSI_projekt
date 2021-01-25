@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from rest_framework.reverse import reverse
 from . import views
-from .models import Team
+from .models import Team, Client
 from rest_framework import status
 from django.utils.http import urlencode
 from django import urls
@@ -68,3 +68,27 @@ class TeamTests(APITestCase):
         get_response = self.client.patch(url, format='json')
         assert get_response.status_code == status.HTTP_200_OK
         assert get_response.data['name'] == team_name
+
+
+class ClientTests(APITestCase):
+    def post_client(self, first_name, second_name, phone_number, email):
+        url = reverse(views.ClientView.name)
+        data = {'first_name': first_name, 'second_name': second_name, 'phone_number': phone_number, 'email': email, }
+        response = self.client.post(url, data, format='json')
+        return response
+
+    def test_post_and_get_client(self):
+        new_client_first_name = 'Jan'
+        new_client_second_name = 'Nowak'
+        new_client_phone_number = '456123778'
+        new_client_email = 'j.nowak123@gmail.com'
+        response = self.post_client(new_client_first_name, new_client_second_name, new_client_phone_number,
+                                    new_client_email)
+        print("PK {0}".format(Client.objects.get().pk))
+        assert response.status_code == status.HTTP_201_CREATED
+        assert Client.objects.count() == 1
+        assert Client.objects.get().first_name == new_client_first_name
+        assert Client.objects.get().second_name == new_client_second_name
+        assert Client.objects.get().phone_number == new_client_phone_number
+        assert Client.objects.get().email == new_client_email
+

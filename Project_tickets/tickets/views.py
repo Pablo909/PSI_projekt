@@ -18,7 +18,7 @@ def default(request):
 
 
 class ClientView(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     name = 'client-list'
@@ -28,7 +28,7 @@ class ClientView(generics.ListCreateAPIView):
 
 
 class ClientDetails(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     name = 'client-detail'
