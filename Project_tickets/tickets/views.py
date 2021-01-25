@@ -22,12 +22,12 @@ class ClientView(generics.ListCreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     name = 'client-list'
-    filter_fields = ['second_name', 'first_name']
+    filterset_fields = ['second_name', 'first_name']
     search_fields = ['second_name', 'first_name', 'email', 'phone_number']
     ordering_fields = ['second_name', 'first_name']
 
 
-class ClientDetails(generics.RetrieveDestroyAPIView):
+class ClientDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
@@ -39,12 +39,12 @@ class PlaceView(generics.ListCreateAPIView):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     name = 'place-list'
-    filter_fields = ['sector', 'row', 'number']
+    filterset_fields = ['sector', 'row', 'number']
     search_fields = ['sector', 'row', 'number']
     ordering_fields = ['sector', 'row', 'number']
 
 
-class PlaceDetails(generics.RetrieveDestroyAPIView):
+class PlaceDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
@@ -52,17 +52,17 @@ class PlaceDetails(generics.RetrieveDestroyAPIView):
 
 
 class TeamView(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     name = 'team-list'
-    filter_fields = ['name']
+    filterset_fields = ['name']
     search_fields = ['name']
     ordering_fields = ['name']
 
 
-class TeamDetails(generics.RetrieveDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class TeamDetails(generics.RetrieveUpdateDestroyAPIView):
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     name = 'team-detail'
@@ -84,12 +84,12 @@ class MatchView(generics.ListCreateAPIView):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
     name = 'match-list'
-    filter_class = MatchFilter
+    filterset_class = MatchFilter
     search_fields = ['date', 'id_team1__name', 'id_team2__name']
     ordering_fields = ['date', 'id_team1', 'id_team2']
 
 
-class MatchDetails(generics.RetrieveDestroyAPIView):
+class MatchDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
@@ -110,13 +110,13 @@ class TicketView(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     name = 'ticket-list'
-    filter_class = TicketFilter
+    filterset_class = TicketFilter
     search_fields = ['price', 'id_match__date', 'id_match__id_team1__name', 'id_match__id_team2__name',
                      'id_client__second_name', 'id_client__first_name']
     ordering_fields = ['price', 'id_match', 'id_client']
 
 
-class TicketDetails(generics.RetrieveDestroyAPIView):
+class TicketDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
