@@ -52,7 +52,7 @@ class Match(models.Model):
 
 class Ticket(models.Model):
     price = models.FloatField(null=False, validators=[MinValueValidator(0)])
-    id_client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name="client_tickets")
+    id_client = models.ForeignKey(Client, null=True, blank=True, on_delete=models.SET_NULL, related_name="client_tickets")
     id_match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match_tickets", null=False)
     id_place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place_tickets", null=False)
 
@@ -60,4 +60,5 @@ class Ticket(models.Model):
         ordering = ('id_match', 'id_place')
 
     def __str__(self):
-        return str(self.price)
+        return str(self.id_match) + ", place: " + str(self.id_place) + ", client: " + str(self.id_client) + ", price: " \
+               + str(self.price) + "zł"

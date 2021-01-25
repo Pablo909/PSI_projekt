@@ -39,9 +39,7 @@ class MatchSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TicketSerializer(serializers.HyperlinkedModelSerializer):
-    id_client = serializers.StringRelatedField()
-    id_match = serializers.StringRelatedField()
-    id_place = serializers.StringRelatedField()
+    id_client = serializers.SlugRelatedField(queryset=Client.objects.all(), slug_field='second_name')
 
     class Meta:
         model = Ticket
