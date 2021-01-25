@@ -1,13 +1,13 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator
 # Create your models here.
 
 
 class Client(models.Model):
-    first_name = models.CharField(max_length=45)
-    second_name = models.CharField(max_length=45)
-    phone_number = models.CharField(max_length=45)
-    email = models.CharField(max_length=45)
+    first_name = models.CharField(max_length=45, null=False)
+    second_name = models.CharField(max_length=45, null=False)
+    phone_number = models.CharField(max_length=12, unique=True)
+    email = models.CharField(max_length=45, unique=True, null=False)
 
     class Meta:
         ordering = ('second_name', 'first_name')
@@ -17,9 +17,9 @@ class Client(models.Model):
 
 
 class Place(models.Model):
-    sector = models.CharField(max_length=10)
-    row = models.IntegerField()
-    number = models.IntegerField()
+    sector = models.CharField(max_length=10, null=False)
+    row = models.IntegerField(null=False)
+    number = models.IntegerField(null=False)
 
     class Meta:
         ordering = ('sector', 'row', 'number')
@@ -29,7 +29,7 @@ class Place(models.Model):
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=45)
+    name = models.CharField(max_length=45, null=False)
 
     class Meta:
         ordering = ('name',)
@@ -39,9 +39,9 @@ class Team(models.Model):
 
 
 class Match(models.Model):
-    date = models.DateTimeField()
-    id_team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home")
-    id_team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away")
+    date = models.DateTimeField(null=False)
+    id_team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home", null=False)
+    id_team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away", null=False)
 
     class Meta:
         ordering = ('date',)
@@ -51,10 +51,10 @@ class Match(models.Model):
 
 
 class Ticket(models.Model):
-    price = models.FloatField()
+    price = models.FloatField(null=False, validators=[MinValueValidator(0)])
     id_client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name="client_tickets")
-    id_match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match_tickets")
-    id_place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place_tickets")
+    id_match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match_tickets", null=False)
+    id_place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place_tickets", null=False)
 
     class Meta:
         ordering = ('id_match', 'id_place')
